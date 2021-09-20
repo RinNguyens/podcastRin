@@ -1,14 +1,51 @@
+import { isTSEntityName } from '@babel/types';
 import React from 'react'
-import { View, Text, ScrollView, StyleSheet, Image, Dimensions,ImageBackground, TouchableOpacity } from 'react-native'
+import { useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, Image, Dimensions,ImageBackground, TouchableOpacity, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 const {width, height} = Dimensions.get('window');
+import { podcast } from '../Assets/data/posdcast';
 
 const logo = require('../Assets/images/logoDashboard.png');
-const imgPodcast = require('../Assets/images/podcast1.png');
-const avatar = require('../Assets/images/avatar.png');
 
 const Dashboard = ({navigation}) => {
+
+    const [currentItem, setCurrentItem] = useState(Number);
+    const [refFlatList, setRefFlatList] = useState(Number);
+
+
+    const renderItem = ({item, index}) => {
+       return (
+        <ImageBackground style={styles.Motivation} source={item.image} resizeMode='contain'>
+            <Text style={styles.textNew}>{item.popular}</Text>
+            <Text style={styles.title}>{item.title}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginHorizontal: 30, position: 'absolute', bottom: 0, paddingBottom: 25, width: '85%'}} >
+                <View>
+                    <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 5}}>
+                        <Text style={{color: '#898F97'}}>{item.created}</Text>
+                        <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+                            <Icon name={item.iconTime} size={30} color="#898F97" />
+                            <Text style={{color: '#898F97'}}> {item.time}</Text>
+                        </View>
+                    </View>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <Image source={item.avatar} resizeMode='contain' />
+                        <Text style={{color: 'white', paddingLeft: 20}}>{item.name}</Text>
+                    </View>
+                </View>
+                <TouchableOpacity style={{position: 'absolute', right: 0, backgroundColor: '#FF334B', width: 60, height: 60, justifyContent: 'center', borderRadius: 50}} >
+                    <Icon name={item.iconPlay} size={35} color="white" style={{fontWeight: 'bold', textAlign: 'center'}} />
+                </TouchableOpacity>
+            </View>
+        </ImageBackground>
+       );
+    };
+
+    const getItemLayout = (data, index) => (
+        {length: width , offset: width  * index, index}
+    );
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={{marginHorizontal: 20}}>
@@ -20,32 +57,26 @@ const Dashboard = ({navigation}) => {
                     </View>
                    
                 </View>
-                <ImageBackground style={styles.Motivation} source={imgPodcast} resizeMode='contain' >
-                    <Text style={styles.textNew}>New</Text>
-                    <Text style={styles.title}>About flow and our motivations</Text>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginHorizontal: 30, position: 'absolute', bottom: 0, paddingBottom: 25, width: '85%'}} >
-                        <View>
-                            <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 5}}>
-                                <Text style={{color: '#898F97'}}>23.05.2121</Text>
-                                <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
-                                    <Icon name="time-outline" size={30} color="#898F97" />
-                                    <Text style={{color: '#898F97'}}> 24:15:05</Text>
-                                </View>
-                            </View>
-                            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Image source={avatar} resizeMode='contain' />
-                                <Text style={{color: 'white', paddingLeft: 20}}>Rin Nguyen</Text>
-                            </View>
-                        </View>
-                        <TouchableOpacity style={{position: 'absolute', right: 0, backgroundColor: '#FF334B', width: 60, height: 60, justifyContent: 'center', borderRadius: 50}} >
-                            <Icon name='play-outline' size={35} color="white" style={{fontWeight: 'bold', textAlign: 'center'}} />
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
+                <FlatList 
+                    data={podcast}
+                    renderItem={renderItem}
+                    keyExtractor={item => `key=${item.id}`}
+                    ref={(ref) => setRefFlatList(ref)}
+                    horizontal
+                    getItemLayout={getItemLayout}
+                    showsHorizontalScrollIndicator={false}
+                    snapToAlignment={'start'}
+                    scrollEventThrottle={16}
+                    snapToOffsets={[...Array(podcast.length)].map(
+                        (x, i) => i * (width * 1 - 40) + (i - 1) * 40
+                    )}
+                />
+
+
             </ScrollView>
         </SafeAreaView>
     )
-}
+};
 
 
 const styles = StyleSheet.create({
@@ -72,10 +103,9 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     Motivation: {
-        width: '100%',
+        width:  width - 40,
         height: 220,
         position: 'relative',
-        color: 'white'
     },
     textNew: {
         color: 'white',
@@ -87,14 +117,14 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         padding: 5,
         position: 'absolute',
-        top: -5,
+        top: 0,
         left: 30
     },
     title: {
         color: 'white',
         fontSize: 25, fontWeight: 'bold',
         width: '70%',
-        marginTop: 35,
+        marginTop: 45,
         marginLeft: 30
     }
 });
