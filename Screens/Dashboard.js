@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 const {width, height} = Dimensions.get('window');
 import { podcast } from '../Assets/data/posdcast';
+import ListenPodcast from '../Components/ListenPodcast';
 
 const logo = require('../Assets/images/logoDashboard.png');
 
@@ -48,7 +49,7 @@ const Dashboard = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={{marginHorizontal: 20}}>
+            <ScrollView style={{marginHorizontal: 20}} showsVerticalScrollIndicator={false}>
                 <View style={[styles.header, {marginBottom: 20}]}>
                     <Image source={logo} style={styles.logo} resizeMode='contain' />
                     <View style={styles.action}>
@@ -60,7 +61,7 @@ const Dashboard = ({navigation}) => {
                 <FlatList 
                     data={podcast}
                     renderItem={renderItem}
-                    keyExtractor={item => `key=${item.id}`}
+                    keyExtractor={item => item.id}
                     ref={(ref) => setRefFlatList(ref)}
                     horizontal
                     getItemLayout={getItemLayout}
@@ -70,7 +71,9 @@ const Dashboard = ({navigation}) => {
                     snapToOffsets={[...Array(podcast.length)].map(
                         (x, i) => i * (width * 1 - 40) + (i - 1) * 40
                     )}
+                    style={styles.flatList}
                 />
+                <ListenPodcast />
 
 
             </ScrollView>
@@ -106,6 +109,11 @@ const styles = StyleSheet.create({
         width:  width - 40,
         height: 220,
         position: 'relative',
+    },
+    flatList: {
+        borderBottomWidth: 1,
+        borderBottomColor: "#858585",
+        paddingBottom: 30,
     },
     textNew: {
         color: 'white',
