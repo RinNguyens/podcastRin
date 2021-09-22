@@ -55,7 +55,7 @@ const ListenPodcast = () => {
     );
 
     return (
-      <View style={{marginTop: 40}}>
+      <View style={{marginTop: 20, borderBottomWidth: 1, borderBottomColor: '#858585', paddingBottom: 20}}>
         <Text style={styles.title}>Listen podcasts</Text>
         <View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{marginTop: 20}}>
