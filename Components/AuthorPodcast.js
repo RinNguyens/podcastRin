@@ -7,7 +7,7 @@ const {width, height} = Dimensions.get('window');
 
 const categorys = ["Recent", "Most podcasts", "Most followed"];
 
-const AuthorPodcast = () => {
+const AuthorPodcast = ({opacity}) => {
     const [isSelected, setIsSelected] = useState('');
     
     useEffect(() => {
@@ -40,7 +40,7 @@ const AuthorPodcast = () => {
     }
 
     return (
-        <View style={{marginVertical: 20}}>
+        <View style={{marginVertical: 20, marginHorizontal: 20, opacity}}>
             <Text style={styles.title}>Podcasts authors</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {category}

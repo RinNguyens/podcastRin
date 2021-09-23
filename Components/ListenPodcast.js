@@ -17,7 +17,7 @@ const Item = ({name, onPress, color}) => (
   </TouchableOpacity>
 )
 
-const ListenPodcast = () => {
+const ListenPodcast = ({opacity}) => {
     const [isSelected, setIsSelected] = useState('');
     const [refFlatList, setRefFlatList] = useState(Number);
 
@@ -49,13 +49,12 @@ const ListenPodcast = () => {
         );
     }
 
-
     const getItemLayout = (data, index) => (
         {length: width , offset: width  * index, index}
     );
 
     return (
-      <View style={{marginTop: 20, borderBottomWidth: 1, borderBottomColor: '#858585', paddingBottom: 20}}>
+      <View style={{marginTop: 20, borderBottomWidth: 1, borderBottomColor: '#858585', paddingBottom: 20, marginHorizontal: 20, opacity}}>
         <Text style={styles.title}>Listen podcasts</Text>
         <View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{marginTop: 20}}>

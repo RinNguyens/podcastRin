@@ -1,20 +1,31 @@
 import { isTSEntityName } from '@babel/types';
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, Image, Dimensions,ImageBackground, TouchableOpacity, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
-const {width, height} = Dimensions.get('window');
 import { podcast } from '../Assets/data/posdcast';
 import AuthorPodcast from '../Components/AuthorPodcast';
 import ListenPodcast from '../Components/ListenPodcast';
+import SearchDashboard from '../Components/SearchDashboard';
 
+const {width, height} = Dimensions.get('window');
 const logo = require('../Assets/images/logoDashboard.png');
 
 const Dashboard = ({navigation}) => {
 
     const [currentItem, setCurrentItem] = useState(Number);
     const [refFlatList, setRefFlatList] = useState(Number);
+    const [isSearch, setIsSearch] = useState(false);
+    const [backgroundColor, setBackgroundColor] = useState('');
+    const [opacity, setOpacity] = useState(Number);
+    
+    useEffect(() => {
+        isSearch ? setBackgroundColor('#000000') : setBackgroundColor('#09121C');
+       
+        isSearch ? setOpacity(0.15) : setOpacity(1);
+     
+    }, [isSearch])
 
 
     const renderItem = ({item, index}) => {
@@ -50,33 +61,48 @@ const Dashboard = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={{marginHorizontal: 20}} showsVerticalScrollIndicator={false}>
-                <View style={[styles.header, {marginBottom: 20}]}>
-                    <Image source={logo} style={styles.logo} resizeMode='contain' />
-                    <View style={styles.action}>
-                        <Icon name="search-outline" size={30} style={[styles.iconAction, {paddingRight: 35}]} />
-                        <Icon name="menu-outline" size={35} style={styles.iconAction} />
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{backgroundColor: '#161423', borderBottomRightRadius: 25, borderBottomLeftRadius: 25, paddingBottom: 30}}>
+                    <View style={[styles.header, {marginBottom: 20, marginHorizontal: 20}]}>
+                        <Image source={logo} style={styles.logo} resizeMode='contain' />
+                        <View style={styles.action}>
+                            <TouchableOpacity onPress={() => setIsSearch(!isSearch)}>
+                                <Icon name="search-outline" size={30} style={[styles.iconAction, {paddingRight: 35}]} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => console.log('menu')}>
+                                <Icon name="menu-outline" size={35} style={styles.iconAction} />
+                            </TouchableOpacity>
+                        </View>
+                    
                     </View>
+                    {
+                        !isSearch ? 
+                            <FlatList 
+                                data={podcast}
+                                renderItem={renderItem}
+                                keyExtractor={item => item.id}
+                                ref={(ref) => setRefFlatList(ref)}
+                                horizontal
+                                getItemLayout={getItemLayout}
+                                showsHorizontalScrollIndicator={false}
+                                snapToAlignment={'start'}
+                                scrollEventThrottle={16}
+                                snapToOffsets={[...Array(podcast.length)].map(
+                                    (x, i) => i * (width * 1 - 40) + (i - 1) * 40
+                                )}
+                                style={[styles.flatList, {marginHorizontal: 20}]}
+                            />
+                            : <SearchDashboard width={width} />
+                    }
                    
                 </View>
-                <FlatList 
-                    data={podcast}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                    ref={(ref) => setRefFlatList(ref)}
-                    horizontal
-                    getItemLayout={getItemLayout}
-                    showsHorizontalScrollIndicator={false}
-                    snapToAlignment={'start'}
-                    scrollEventThrottle={16}
-                    snapToOffsets={[...Array(podcast.length)].map(
-                        (x, i) => i * (width * 1 - 40) + (i - 1) * 40
-                    )}
-                    style={styles.flatList}
-                />
-                <ListenPodcast />
-                <AuthorPodcast />
+                <View pointerEvents={isSearch ? 'none' : 'auto'}>
+                    <ListenPodcast opacity={opacity}  />
 
+                    <AuthorPodcast opacity={opacity} />
+                </View>
+
+                
 
             </ScrollView>
         </SafeAreaView>
@@ -86,8 +112,8 @@ const Dashboard = ({navigation}) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#09121C',
         flex: 1,
+        backgroundColor: '#09121C'
     },
     header: {
         flexDirection: 'row',
@@ -113,8 +139,6 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     flatList: {
-        borderBottomWidth: 1,
-        borderBottomColor: "#858585",
         paddingBottom: 30,
     },
     textNew: {
