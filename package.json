@@ -2,6 +2,11 @@
   "name": "podcast",
   "version": "0.0.1",
   "private": true,
+  "homepage": "https://github.com/kefranabg/readme-md-generator#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kefranabg/readme-md-generator.git"
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -17,7 +22,8 @@
     "react-native": "0.65.1",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.7.2",
-    "react-native-vector-icons": "^8.1.0"
+    "react-native-vector-icons": "^8.1.0",
+    "readme-md-generator": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
