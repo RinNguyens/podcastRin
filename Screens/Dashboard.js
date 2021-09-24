@@ -19,6 +19,7 @@ const Dashboard = ({navigation}) => {
     const [isSearch, setIsSearch] = useState(false);
     const [backgroundColor, setBackgroundColor] = useState('');
     const [opacity, setOpacity] = useState(Number);
+    const [isMenu, setIsMenu] = useState(Boolean);
     
     useEffect(() => {
         isSearch ? setBackgroundColor('#000000') : setBackgroundColor('#09121C');
@@ -69,7 +70,7 @@ const Dashboard = ({navigation}) => {
                             <TouchableOpacity onPress={() => setIsSearch(!isSearch)}>
                                 <Icon name="search-outline" size={30} style={[styles.iconAction, {paddingRight: 35}]} />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => console.log('menu')}>
+                            <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
                                 <Icon name="menu-outline" size={35} style={styles.iconAction} />
                             </TouchableOpacity>
                         </View>
