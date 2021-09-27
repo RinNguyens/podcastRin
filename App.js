@@ -22,6 +22,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Signin from './Screens/Signin';
 import Dashboard from './Screens/Dashboard';
 import Menu from './Screens/Menu';
+import Browse from'./Screens/Browse';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,10 @@ const App = () => {
           <Stack.Screen
             name="Menu"
             component={Menu}
+          />
+          <Stack.Screen
+            name="Browse"
+            component={Browse}
           />
         </Stack.Navigator>
       </NavigationContainer>

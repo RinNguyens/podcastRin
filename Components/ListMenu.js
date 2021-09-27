@@ -1,13 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const ListMenu = ({item}) => {
+const ListMenu = ({item, navigation}) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.push(item.route)} >
             <Icon name={item.icon} size={30} style={{color: '#898F97'}} />
             <Text style={styles.title}>{item.title}</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 

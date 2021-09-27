@@ -9,7 +9,7 @@ const Menu = ({navigation}) => {
 
     const dataListMenu = Menus.map((item) => {
         return (
-            <ListMenu key={item.id} item={item} />
+            <ListMenu key={item.id} item={item} navigation={navigation}/>
         );
     })
 
@@ -26,7 +26,7 @@ const Menu = ({navigation}) => {
                             <Icon name="notifications-outline" size={30} style={styles.iconNotifications}/>
                             <View style={styles.hasNoti}></View>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{marginLeft: 20}}>
+                        <TouchableOpacity style={{marginLeft: 20}} onPress={() => navigation.goBack()}>
                             <Icon name="close-outline" size={40} style={{color: 'white'}} />
                         </TouchableOpacity>
                     </View>

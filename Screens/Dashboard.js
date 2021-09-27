@@ -8,9 +8,9 @@ import { podcast } from '../Assets/data/posdcast';
 import AuthorPodcast from '../Components/AuthorPodcast';
 import ListenPodcast from '../Components/ListenPodcast';
 import SearchDashboard from '../Components/SearchDashboard';
+import Header from '../Components/Header';
 
 const {width, height} = Dimensions.get('window');
-const logo = require('../Assets/images/logoDashboard.png');
 
 const Dashboard = ({navigation}) => {
 
@@ -27,6 +27,10 @@ const Dashboard = ({navigation}) => {
         isSearch ? setOpacity(0.15) : setOpacity(1);
      
     }, [isSearch])
+
+    const clickSetSearch = () => {
+        setIsSearch(!isSearch);
+    }
 
 
     const renderItem = ({item, index}) => {
@@ -64,18 +68,9 @@ const Dashboard = ({navigation}) => {
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{backgroundColor: '#161423', borderBottomRightRadius: 25, borderBottomLeftRadius: 25, paddingBottom: 30}}>
-                    <View style={[styles.header, {marginBottom: 20, marginHorizontal: 20}]}>
-                        <Image source={logo} style={styles.logo} resizeMode='contain' />
-                        <View style={styles.action}>
-                            <TouchableOpacity onPress={() => setIsSearch(!isSearch)}>
-                                <Icon name="search-outline" size={30} style={[styles.iconAction, {paddingRight: 35}]} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => navigation.navigate('Menu')}>
-                                <Icon name="menu-outline" size={35} style={styles.iconAction} />
-                            </TouchableOpacity>
-                        </View>
-                    
-                    </View>
+                    {/* Header */}
+                    <Header navigation={navigation} setIsSearch={clickSetSearch}/>
+
                     {
                         !isSearch ? 
                             <FlatList 
