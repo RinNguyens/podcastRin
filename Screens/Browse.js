@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Dimensions } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Dimensions, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../Components/Header'
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -41,18 +41,22 @@ const Browse = ({navigation}) => {
         );
     })
 
-    const category = BrowseCategory.map((item) => {
-        return(
+  
+    const category = ({item}) => {
+        return (
             <CategoryBrowse key={item.id} item={item} width={width} />
+
         );
-    })
+    }
 
     return (
       <SafeAreaView style={styles.container}>
-        <Header navigation={navigation} />
         <ScrollView
+          nestedScrollEnabled={true}
           showsVerticalScrollIndicator={false}
           style={styles.mainView}>
+          <Header navigation={navigation} />
+
           <Text style={styles.title}>Browse</Text>
           <View style={styles.search}>
             <Text style={styles.name}>Robert</Text>
@@ -71,8 +75,18 @@ const Browse = ({navigation}) => {
               {listAction}
             </ScrollView>
           </View>
-          <View style={{flex: 1, width, flexWrap: 'nowrap' , marginTop: 15, backgroundColor: 'red'}}>
-            {category}
+          <View style={{marginVertical: 30}}>
+            <FlatList
+              data={BrowseCategory}
+              renderItem={category}
+              extraData={item => item.id}
+              showsVerticalScrollIndicator={false}
+              numColumns={2}
+              scrollEventThrottle={16}
+            >
+
+                
+            </FlatList>
           </View>
         </ScrollView>
       </SafeAreaView>

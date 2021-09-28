@@ -5,7 +5,7 @@ const logo = require('../Assets/images/logoDashboard.png');
 
 const Header = ({navigation, setIsSearch}) => {
   return (
-    <View style={[styles.header, {marginBottom: 20, marginHorizontal: 20}]}>
+    <View style={[styles.header]}>
       <Image source={logo} style={styles.logo} resizeMode="contain" />
       <View style={styles.action}>
         <TouchableOpacity onPress={setIsSearch}>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         alignContent: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     logo: {
         height: 120,

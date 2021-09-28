@@ -69,8 +69,9 @@ const Dashboard = ({navigation}) => {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{backgroundColor: '#161423', borderBottomRightRadius: 25, borderBottomLeftRadius: 25, paddingBottom: 30}}>
                     {/* Header */}
-                    <Header navigation={navigation} setIsSearch={clickSetSearch}/>
-
+                    <View style={{marginHorizontal: 20}}>
+                        <Header navigation={navigation} setIsSearch={clickSetSearch}/>
+                    </View>
                     {
                         !isSearch ? 
                             <FlatList 

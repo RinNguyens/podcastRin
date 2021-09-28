@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginRight: 20,
         position: 'relative',
+        
     },
     image: {
         resizeMode: 'contain',
