@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react'
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../Components/Header'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Category } from '../Assets/data/category';
 import { useState } from 'react/cjs/react.development';
+import LinearGradient from 'react-native-linear-gradient';
+import { BrowseCategory } from '../Assets/data/browseCategory';
+import CategoryBrowse from '../Components/CategoryBrowse';
+
+const {width, height} = Dimensions.get('window');
 
 const Categories = ({item, color, backgroundColor, onPress}) => {
     return(
@@ -27,7 +32,7 @@ const Browse = ({navigation}) => {
 
     }, [selected]);
 
-    const category = Category.map((item) => {
+    const listAction = Category.map((item) => {
         const color =  selected === item.title ? '#ffffff' : '#898F97';
         const backgroundColor = selected === item.title ? '#C4CBD0' : '#19232F';
         
@@ -36,28 +41,42 @@ const Browse = ({navigation}) => {
         );
     })
 
+    const category = BrowseCategory.map((item) => {
+        return(
+            <CategoryBrowse key={item.id} item={item} width={width} />
+        );
+    })
+
     return (
-        <SafeAreaView style={styles.container}>
-            <Header navigation={navigation}/>
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.mainView}>
-                <Text style={styles.title}>Browse</Text>
-                <View style={styles.search}>
-                    <Text style={styles.name}>Robert</Text>
-                    <TextInput 
-                        placeholder="|"
-                        placeholderTextColor="#898F97"
-                        style={styles.input}
-                    />
-                    <Icon name="search-outline" size={25} style={styles.iconSearch} />
-                </View>
-                <View style={styles.listCategory}>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} scrollEventThrottle={16}>
-                        {category}
-                    </ScrollView>
-                </View>
+      <SafeAreaView style={styles.container}>
+        <Header navigation={navigation} />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.mainView}>
+          <Text style={styles.title}>Browse</Text>
+          <View style={styles.search}>
+            <Text style={styles.name}>Robert</Text>
+            <TextInput
+              placeholder="|"
+              placeholderTextColor="#898F97"
+              style={styles.input}
+            />
+            <Icon name="search-outline" size={25} style={styles.iconSearch} />
+          </View>
+          <View style={styles.listCategory}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              scrollEventThrottle={16}>
+              {listAction}
             </ScrollView>
-        </SafeAreaView>
-    )
+          </View>
+          <View style={{flex: 1, width, flexWrap: 'nowrap' , marginTop: 15, backgroundColor: 'red'}}>
+            {category}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -111,7 +130,7 @@ const styles = StyleSheet.create({
     textCategory: {
         textAlign: 'center',
         marginTop: 20
-    }
+    },
 })
 
 
