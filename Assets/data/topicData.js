@@ -1,0 +1,48 @@
+export const TopicData = [
+    {
+      id: 1,
+      title: 'Positive psychology and our motivations',
+      iconAuthor: 'person-outline',
+      iconPodcast: 'mic-outline',
+      author: '124',
+      podcast: '7 289',
+      image: require('../images/topic1.png'),
+    },
+    {
+      id: 2,
+      title: 'At massa nulla ultricies aliquam aenean lacus',
+      iconAuthor: 'person-outline',
+      iconPodcast: 'mic-outline',
+      author: '124',
+      podcast: '7 289',
+      image: require('../images/topic2.png'),
+    },
+    {
+      id: 3,
+      title: 'Eget suspendisse sem posuere mauris ligula',
+      iconAuthor: 'person-outline',
+      iconPodcast: 'mic-outline',
+      author: '124',
+      podcast: '7 289',
+      image: require('../images/top3.png'),
+    },
+    {
+      id: 4,
+      title: 'Positive psychology and our motivations',
+      iconAuthor: 'person-outline',
+      iconPodcast: 'mic-outline',
+      author: '124',
+      podcast: '7 289',
+      image: require('../images/topic4.png'),
+    },
+    {
+      id: 5,
+      title: 'Id sed urna cursus sed felis lacus gravida.',
+      iconAuthor: 'person-outline',
+      iconPodcast: 'mic-outline',
+      author: '124',
+      podcast: '7 289',
+      image: require('../images/topic2.png'),
+    },
+  ];
+  

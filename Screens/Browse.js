@@ -1,13 +1,19 @@
 import React, { useEffect } from 'react'
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Dimensions, FlatList } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Dimensions, FlatList, ImageBackground } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Header from '../Components/Header'
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Category } from '../Assets/data/category';
 import { useState } from 'react/cjs/react.development';
 import LinearGradient from 'react-native-linear-gradient';
+//data
 import { BrowseCategory } from '../Assets/data/browseCategory';
+import { Category } from '../Assets/data/category';
+import { TopicData } from '../Assets/data/topicData';
+//component
+import CaregoriesAction from '../Components/CaregoriesAction';
 import CategoryBrowse from '../Components/CategoryBrowse';
+import Header from '../Components/Header'
+import Topics from '../Components/Topics';
+
 
 const {width, height} = Dimensions.get('window');
 
@@ -23,32 +29,53 @@ const Categories = ({item, color, backgroundColor, onPress}) => {
 }
 
 const Browse = ({navigation}) => {
+
     const [selected, setSelected] = useState(Boolean);
 
     useEffect(() => {
         if (!selected) {
             setSelected('Categories');
         }
-
     }, [selected]);
 
     const listAction = Category.map((item) => {
         const color =  selected === item.title ? '#ffffff' : '#898F97';
         const backgroundColor = selected === item.title ? '#C4CBD0' : '#19232F';
-        
         return(
             <Categories key={item.id} item={item} backgroundColor={backgroundColor} color={color} onPress={() => setSelected(item.title)}/>
         );
     })
 
-  
-    const category = ({item}) => {
+    const renderItem = ({item}) => {
         return (
             <CategoryBrowse key={item.id} item={item} width={width} />
-
         );
     }
 
+    const topicAction = TopicData.map((item) => {
+        return (
+            <Topics key={item.id} item={item} />
+        );
+    })
+
+
+    const handleActionBrowse = (params) => {
+        switch(params) {
+            case 'Categories':
+                return (
+                    <CaregoriesAction key={params} data={BrowseCategory} renderItem={renderItem} />
+                );
+                break;
+            case 'Topics':
+                return (
+                    topicAction
+                );
+                break;
+        }
+    }
+
+
+    
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView
@@ -75,18 +102,11 @@ const Browse = ({navigation}) => {
               {listAction}
             </ScrollView>
           </View>
-          <View style={{marginVertical: 30}}>
-            <FlatList
-              data={BrowseCategory}
-              renderItem={category}
-              extraData={item => item.id}
-              showsVerticalScrollIndicator={false}
-              numColumns={2}
-              scrollEventThrottle={16}
-            >
-
-                
-            </FlatList>
+          <View style={{marginTop: 50}}>
+              <Text style={{fontSize: 20, color: '#898F97'}}>{selected} {selected !== 'Categories' ? `(${TopicData.length})` : ''}</Text>
+          </View>
+          <View style={{marginTop: 10, marginBottom: 30}}>
+                {handleActionBrowse(selected)}
           </View>
         </ScrollView>
       </SafeAreaView>
